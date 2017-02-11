@@ -93,7 +93,9 @@ NOTE: There are multiple ways to go about making a username unique. Your `_id` f
 ~~~~
 
 - `GET /user?id=` - Get a user by a specific ID. All objects therefore must have a `_id` field. If the ID given does not exist, return a 404 status.
+
 An example would be `/user?id=192` could return
+
  ~~~~javascript
  {   
     "_id": "192",
@@ -104,8 +106,11 @@ An example would be `/user?id=192` could return
     "age": 54
 }
 ~~~~
+
 - `GET /user?username=` - Get a user by a specific username. If the username given does not exist, return a 404 status.
+
 An example would be `/user?username=m1ssionP0zzible` could return
+
  ~~~~javascript
  {   
     "_id": "192",
@@ -123,6 +128,7 @@ An example would be `/user?username=m1ssionP0zzible` could return
 
 - `PUT /user?id=` - Updates an already existing user via the body. If the username key is passed as well, ignore the username key. If the user doesn't exist, return a 404 error. We'll assume a golden path and all fields passed are fields in the user schema.
 Example Before:
+
 ~~~~javascript
 {   
     "_id": "231",
@@ -133,6 +139,7 @@ Example Before:
     "age": 174
 }
 ~~~~
+
 `PUT /user?id=231` with body:
 ~~~~ javascript
 { 

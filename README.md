@@ -81,8 +81,9 @@ Here’s the part where we want to be able to get and modify users.
 
 - `POST /user` - In the body of the post request, supply all required fields and support any optional fields. See below on the schema required. If the username provided already exist or not provided, return a 403 status.
 NOTE: There are multiple ways to go about making a username unique. Your `_id` field therefore may be different from above but ensure your `username` field is always there! 
+
  ~~~~javascript
-{
+ {   
     "_id": {type:String}, //Will be different depending on your implementation, could be Number
     "username": {type: String, required:true, unique:true},
     "firstname":  {type: String, default:""},
@@ -267,7 +268,9 @@ Finally to the good parts. We need user ratings for a rating app ([Have you ever
     "comment":{type:String}
 }
 ~~~~
+
 - `GET /review?id=`- Get the review with the corresponding ID. If the id does not exist, return a 404 status. 
+
 Example `/review?id=123`
 ~~~~javascript
 {
@@ -280,6 +283,7 @@ Example `/review?id=123`
 ~~~~
 
 - `GET /review?storeid=`- Get all reviews with the corresponding storeID, sorted by rating then `_id` ascending. Even if the storeid does not exist, return an empty reviews array. It should return a JSON object with reviews in an array under the key `reviews`
+
 Example
 
 `GET /review?storeid=132`
@@ -316,7 +320,7 @@ Example
 ~~~~
 
 - `GET /review?userid=` - Similar to storeid, but for users:
-- 
+
 Example `GET /review?userid=5123`
 ~~~~javascript
 {

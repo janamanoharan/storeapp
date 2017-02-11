@@ -8,11 +8,15 @@ This assignment is individual. As for the front end, you may choose to use any s
 
 ### REST Specification
 To make marking simpler, we will be only doing these 3 commands when marking 
+
 `mongod --dbpath=./data/` - this starts the mongodb server
+
 In another console
+
 `npm install` - this will install all your packages you may have imported
-`npm start` - this will start your app. The reason why we're not just using `node app.js` is because this is more universal if someone is using express engine. To get this command working, add a new key to your `package.json` with `  "scripts": {
-    "start": "node app.js"}`
+
+`npm start` - this will start your app. The reason why we're not just using `node app.js` is because this is more universal if someone is using express engine. To get this command working, add a new key to your `package.json` with 
+`  "scripts": {"start": "node app.js"}`
 
 Your `package.json` should look something like
 ~~~~javascript
@@ -73,7 +77,7 @@ An example would be `/users?firstname=Tom&sex=M` could return
 ~~~~
 
 #### Individual Users (15%)
-Here’s the part where we want to be able to get and modify users.
+Hereâ€™s the part where we want to be able to get and modify users.
 
 - `POST /user` - In the body of the post request, supply all required fields and support any optional fields. See below on the schema required. If the username provided already exist or not provided, return a 403 status.
 NOTE: There are multiple ways to go about making a username unique. Your `_id` field therefore may be different from above but ensure your `username` field is always there! 
@@ -213,7 +217,7 @@ An example would be `/store?id=192` could return
 }
 ~~~~~
 
-- `DELETE /store?id=`  -Deletes a store by a specific ID. Return 200 status if the store exists. Return 404 if the store doesn’t exist. When deleting a store, also delete their reviews. (See below).
+- `DELETE /store?id=`  -Deletes a store by a specific ID. Return 200 status if the store exists. Return 404 if the store doesnâ€™t exist. When deleting a store, also delete their reviews. (See below).
 `/store?id=192` would remove the store with 192 as their id. Calling it again would result a 404 response.
 
 - `PUT /store?id=` - Updates an already existing store via the body. If the store doesn't exist, return a 404 error. We'll assume a golden path and all fields passed are fields in the store schema. 

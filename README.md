@@ -79,7 +79,7 @@ An example would be `/users?firstname=Tom&sex=M` could return
 #### Individual Users (15%)
 Here’s the part where we want to be able to get and modify users.
 
-- `POST /user` - In the body of the post request, supply all required fields and support any optional fields. See below on the schema required. If the username provided already exist or not provided, return a 403 status.
+- `POST /user` - In the body of the post request, supply all required fields and support any optional fields. See below on the schema required. If the username provided already exist or not provided, return a 403 status. If the request is valid, return a 200 status with the new user returned.
 NOTE: There are multiple ways to go about making a username unique. Your `_id` field therefore may be different from above but ensure your `username` field is always there! 
 
  ~~~~javascript
@@ -127,7 +127,7 @@ An example would be `/user?username=m1ssionP0zzible` could return
 - `DELETE /user?id=`  -Deletes a user by a specific ID. Return 404 if the user doesn't exist. When deleting a user, also delete their reviews. (See below).
 `/user?id=192` would remove the user with 192 as their id. Calling it again would result a 404 response.
 
-- `PUT /user?id=` - Updates an already existing user via the body. If the username key is passed as well, ignore the username key. If the user doesn't exist, return a 404 error. We'll assume a golden path and all fields passed are fields in the user schema.
+- `PUT /user?id=` - Updates an already existing user via the body. If the username key is passed as well, ignore the username key. If the user doesn't exist, return a 404 error. If the request is valid, return a 200 with the updated user returned. We'll assume all fields passed are fields in the user schema.
 Example Before:
 
 ~~~~javascript
@@ -150,7 +150,7 @@ Example Before:
     "age": 28
 }
 ~~~~
-The database nows looks like:
+The database nows looks like and should return:
 ~~~~ javascript
 {   
     "_id": "231",
@@ -204,7 +204,7 @@ An example would be `/stores?category=department` could return
 #### Individual Stores (10%)
 For stores, chains may share the same name. Therefore, their only identifier is their `_id`.
 
-- `POST /store` - In the body of the post request, supply all required fields and include any optional fields. See below on the schema required. 
+- `POST /store` - In the body of the post request, supply all required fields and include any optional fields. See below on the schema required. Return a 200 if the request is valid with the newly created store. Return a 403 if no storename is provided or the storename is blank.
  ~~~~javascript
 {
     "_id": {type:String}, 
@@ -228,7 +228,7 @@ An example would be `/store?id=192` could return
 - `DELETE /store?id=`  -Deletes a store by a specific ID. Return 200 status if the store exists. Return 404 if the store doesn’t exist. When deleting a store, also delete their reviews. (See below).
 `/store?id=192` would remove the store with 192 as their id. Calling it again would result a 404 response.
 
-- `PUT /store?id=` - Updates an already existing store via the body. If the store doesn't exist, return a 404 error. We'll assume a golden path and all fields passed are fields in the store schema. 
+- `PUT /store?id=` - Updates an already existing store via the body. If the store doesn't exist, return a 404 error. We'll assume all fields passed are fields in the store schema. Return a 200 if the request is valid with the updated store.
 Example Before:
 ~~~~javascript
 {   
@@ -245,7 +245,7 @@ Example Before:
     "category":"clothing"
 }
 ~~~~
-The database nows looks like:
+The database nows looks like and should return:
 ~~~~ javascript
 {   
     "_id": "192",
@@ -258,7 +258,7 @@ The database nows looks like:
 #### Reviews (15%)
 Finally to the good parts. We need user ratings for a rating app ([Have you ever had shoes without shoe strings?](https://genius.com/3392)). When a user or store gets deleted, delete all reviews involving the user or store respectively.
 
-- `POST /review` - A post request must have both the userID and the storeID. A rating must be between 0 to 10 inclusive. Return a 403 status if either store or user does not exist or rating is not between 0 to 10 or the combination of userID and storeID review already exist.  Below is a schema of a review.
+- `POST /review` - A post request must have both the userID and the storeID. A rating must be between 0 to 10 inclusive. Return a 403 status if either store or user does not exist or rating is not between 0 to 10 or the combination of userID and storeID review already exist.  Below is a schema of a review. Return a 200 if the request is valid with the newly created review.
 ~~~~javascript
 {
     "_id": {type:String}, 
@@ -282,7 +282,7 @@ Example `/review?id=123`
 }
 ~~~~
 
-- `GET /review?storeid=`- Get all reviews with the corresponding storeID, sorted by rating then `_id` ascending. Even if the storeid does not exist, return an empty reviews array. It should return a JSON object with reviews in an array under the key `reviews`
+- `GET /review?storeid=`- Get all reviews with the corresponding storeID, sorted by rating then `_id` ascending. Even if the storeid does not exist, return an empty reviews array. It should return a JSON object with reviews in an array under the key `reviews`.
 
 Example
 
@@ -350,7 +350,7 @@ Example `GET /review?userid=5123`
 - `DELETE /review?id=` - Delete the review with the corresponding ID. If the id does not exist, return a 404 status. 
 - `DELETE /review?storeid=` - Delete all reviews with the corresponding storeID. If the storeID does not exist, return a 404 status. 
 - `DELETE /review?userid=` - Delete all reviews with the corresponding userID. If the userID does not exist, return a 404 status. 
-- `PUT /review?id=` - Modify a review. Do not modify the storeID or userID (ignore the field). If the review doesn't exist, return a 404 status.
+- `PUT /review?id=` - Modify a review. Do not modify the storeID or userID (ignore the field). If the review doesn't exist, return a 404 status. Return a 200 with the updated review if successful.
 Example 
 
 Before
@@ -373,7 +373,7 @@ Before
 }
 ~~~~
 
-After
+After and to return:
 ~~~~javascript
 {    
     "_id":"531",

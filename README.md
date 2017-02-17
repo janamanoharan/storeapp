@@ -1,26 +1,25 @@
 # Assignment 2: Backend
 
-With the raising popularity of rating apps from restaurants to games to [people](https://www.youtube.com/watch?v=CI4kiPaKfAE), for this assignment we'll create a simple store rating app. Your job is to implement a RESTful API that allows ratings and stores able to be CRUD (Create, Read , Update , Delete). For the simplicity of this assignment, we'll do without user authentication as well as only having very simple functions. This is mainly to get your feet wet with making a full stack application.
+With the rising popularity of apps, the ratings have become a crucial part of user experience. We rat everyting from restaurants to games to [people](https://www.youtube.com/watch?v=CI4kiPaKfAE). For this assignment you'll create a simple app that rates stores. Your job is to implement a RESTful API that can digest ratings and map them to stores. It should be able to perform CRUD (Create, Read , Update , Delete) operations. For simplicity, you're not needed to implement user authentication and we encourage you to use simple functions/methods. The objective is to give you a hands-on experience with full stack application development. You will NOT be working in teams, individual submissions will be required.
 
-Although there are a lot of [backend](https://en.wikipedia.org/wiki/Comparison_of_application_servers) ([Rails](http://rubyonrails.org/), [Django](https://www.djangoproject.com/), [ASP.NET](http://asp.net), [Perfect](http://perfect.org)) and [database](http://db-engines.com/en/ranking) ([PostGreSQL](https://www.postgresql.org/), [Cassandra](http://cassandra.apache.org/), [Redis](https://redis.io/)) options out there, you must use [Node.js](https://nodejs.org/en/) and [MongoDB](https://www.mongodb.com/) for this assignment (this is for standardisation for grading). You may choose to use [Express](http://expressjs.com/), [Mongoose](http://mongoosejs.com/), [React](https://facebook.github.io/react/) or anything else if you wish in the backend. Since the backend will be autograded, please ensure your routes works exactly as specified.
+There are a lot of [backend](https://en.wikipedia.org/wiki/Comparison_of_application_servers) ([Rails](http://rubyonrails.org/), [Django](https://www.djangoproject.com/), [ASP.NET](http://asp.net), [Perfect](http://perfect.org)) and [database](http://db-engines.com/en/ranking) ([PostGreSQL](https://www.postgresql.org/), [Cassandra](http://cassandra.apache.org/), [Redis](https://redis.io/)) options, but for this assignment you will be using [Node.js](https://nodejs.org/en/) and [MongoDB](https://www.mongodb.com/). You may choose to use [Express](http://expressjs.com/), [Mongoose](http://mongoosejs.com/), [React](https://facebook.github.io/react/) or anything else if you wish in the backend. We plan to auto-mark the backend code, **so please ensure your routes works exactly as specified**.
 
-This assignment is individual. As for the front end, you may choose to use any styling ([Bootstrap](http://getbootstrap.com/), [JqueryUI](http://jqueryui.com/), [Font Awesome](http://fontawesome.io/) etc.) or Javascript ([Angular](https://angularjs.org/), [React](https://facebook.github.io/react/), [JQuery](http://jquery.com/), [Ember](http://emberjs.com/), etc.) library you wish as long as the TAs are able to open and the interface is intuitive. 
+For the front end, you may choose to use any styling ([Bootstrap](http://getbootstrap.com/), [JqueryUI](http://jqueryui.com/), [Font Awesome](http://fontawesome.io/) etc.) or Javascript ([Angular](https://angularjs.org/), [React](https://facebook.github.io/react/), [JQuery](http://jquery.com/), [Ember](http://emberjs.com/), etc.) library you wish as long as the TAs are able to run the application and the UI looks intuitive.
 
 ### REST Specification
-To make marking simpler, we will be only doing these 3 commands when marking 
+You need to make sure you package.json file is configured properly so that when we run the following set of commands, it sets up automatically.
 
-`mongod --dbpath=./data/` - this starts the mongodb server
+`mongod --dbpath=./data/` - this will start the mongodb server
 
 In another console
 
-`npm install` - this will install all your packages you may have imported
+`npm install` - this will install all the node packages you specified as dependencies.
 
-`npm start` - this will start your app. The reason why we're not just using `node app.js` is because this is more universal if someone is using express engine. To get this command working, add a new key to your `package.json` with 
-`  "scripts": {"start": "node app.js"}`
+`npm start` - this **shoul** start your app. It will be your responsibility to make sure, this command makes your app up and running.
 
-Your `package.json` should look something like
+Your `package.json` would look something like
 ~~~~javascript
-{ 
+{
     "name": "App Name here"
 ...
     "scripts":{
@@ -32,19 +31,20 @@ Your `package.json` should look something like
 }
 ~~~~
 
-Lastly, make sure your app is bind to port 3000, so when we call `localhost:3000` we can access your front end.
+Lastly, make sure your app is bound to port 3000, so when we call `localhost:3000` we can access your front end.
 
 #### Users (10%)
 
-Your RESTful API should be able to CRUD users (what kind of rating app would it be with no users?). The JSON specifications of a user is below under `POST /users`.
+The API should be able to perform CRUD operations on users (what kind of rating app would it be with no users?). The JSON specifications of a user is below under `POST /users`.
 
- - `GET /users`  Get all the users, ordered by username ascending, in an array in the key `users`
+ - `GET /users`  Get all the users, ordered by username ascending, in an array in the key `users`.
  - `GET /users?query` Same as above and filtered (exact) by the possible query:
     - `firstname`
     - `lastname`
     - `age`
     - `sex`
-An example would be `/users?firstname=Tom&sex=M` could return
+An example would be `/users?firstname=Tom&sex=M` could return a JSON object containing a field `users` which is an array of User Objects.
+
 ~~~~javascript
 {
 "users": [
@@ -56,7 +56,7 @@ An example would be `/users?firstname=Tom&sex=M` could return
             "sex": "M",
             "age": 60
         },
-        {   
+        {
             "_id": "572",
             "username": "h0rcrux",
             "firstname":"Tom",
@@ -64,7 +64,7 @@ An example would be `/users?firstname=Tom&sex=M` could return
             "sex": "M",
             "age": 71
         },
-        {   
+        {
             "_id": "192",
             "username": "m1ssionP0zzible",
             "firstname":"Tom",
@@ -80,10 +80,11 @@ An example would be `/users?firstname=Tom&sex=M` could return
 Here’s the part where we want to be able to get and modify users.
 
 - `POST /user` - In the body of the post request, supply all required fields and support any optional fields. See below on the schema required. If the username provided already exist or not provided, return a 403 status. If the request is valid, return a 200 status with the new user returned.
+
 NOTE: There are multiple ways to go about making a username unique. Your `_id` field therefore may be different from above but ensure your `username` field is always there! 
 
  ~~~~javascript
- {   
+ {
     "_id": {type:String}, //Will be different depending on your implementation, could be Number
     "username": {type: String, required:true, unique:true},
     "firstname":  {type: String, default:""},
@@ -98,7 +99,7 @@ NOTE: There are multiple ways to go about making a username unique. Your `_id` f
 An example would be `/user?id=192` could return
 
  ~~~~javascript
- {   
+ {
     "_id": "192",
     "username": "m1ssionP0zzible",
     "firstname":"Tom",
@@ -113,7 +114,7 @@ An example would be `/user?id=192` could return
 An example would be `/user?username=m1ssionP0zzible` could return
 
  ~~~~javascript
- {   
+ {
     "_id": "192",
     "username": "m1ssionP0zzible",
     "firstname":"Tom",
@@ -124,14 +125,15 @@ An example would be `/user?username=m1ssionP0zzible` could return
 
 ~~~~
 
-- `DELETE /user?id=`  -Deletes a user by a specific ID. Return 404 if the user doesn't exist. When deleting a user, also delete their reviews. (See below).
-`/user?id=192` would remove the user with 192 as their id. Calling it again would result a 404 response.
+- `DELETE /user?id=`  -Deletes a user by a specific ID. Return 404 if the user doesn't exist. When deleting a user, also delete their reviews. (See below). e,g,
+`/user?id=192` would remove the user with 192 as their id. Calling it again would result in a 404 response.
 
 - `PUT /user?id=` - Updates an already existing user via the body. If the username key is passed as well, ignore the username key. If the user doesn't exist, return a 404 error. If the request is valid, return a 200 with the updated user returned. We'll assume all fields passed are fields in the user schema.
+
 Example Before:
 
 ~~~~javascript
-{   
+{
     "_id": "231",
     "username": "TotallyNotAFakeUser",
     "firstname":"Nigerian",
@@ -143,16 +145,16 @@ Example Before:
 
 `PUT /user?id=231` with body:
 ~~~~ javascript
-{ 
+{
     "username":"shouldNotChange",
     "firstname":"HongKong",
     "lastname":"banker",
     "age": 28
 }
 ~~~~
-The database nows looks like and should return:
+The database nows looks like the following and should return:
 ~~~~ javascript
-{   
+{
     "_id": "231",
     "username": "TotallyNotAFakeUser",
     "firstname":"HongKong",
@@ -164,34 +166,34 @@ The database nows looks like and should return:
 
 #### Stores (10%)
 
- - `GET /stores`  Get all the stores, ordered by storename ascending (by ID ascending if a tie), in an array in the key `stores`
+ - `GET /stores`  Gets all stores, ordered by storename in ascending order (In case of a tie, they should be sorted by ID), as an array in the key `stores`
  - `GET /stores?query` Same as above and filtered (exact) by the query:
     - `category`
     - `storename`
 
-An example would be `/stores?category=department` could return
+e.g. `/stores?category=department` would return:
 ~~~~javascript
 {
 "stores": [
-        {   
+        {
             "_id": "4231",
             "storename": "gartet",
             "category":"department",
             "Address":"123 Steals Avenue"
         },
-        {   
+        {
             "_id": "133",
             "storename": "mallWart",
             "category":"department",
             "Address":"405 Blore Street"
         },
-        {   
+        {
             "_id": "431",
             "storename": "mallWart",
             "category":"department",
             "Address":"83 Dawn Mills Road"
         },
-        {   
+        {
             "_id": "192",
             "storename": "One Square",
             "category":"department",
@@ -217,7 +219,7 @@ For stores, chains may share the same name. Therefore, their only identifier is 
 - `GET /store?id=` - Get a store by a specific ID. All objects therefore must have a `_id` field. If the ID given does not exist, return a 404 status.
 An example would be `/store?id=192` could return
  ~~~~javascript
-{   
+{
     "_id": "192",
     "storename": "One Square",
     "category":"department",
@@ -231,7 +233,7 @@ An example would be `/store?id=192` could return
 - `PUT /store?id=` - Updates an already existing store via the body. If the store doesn't exist, return a 404 error. We'll assume all fields passed are fields in the store schema. Return a 200 if the request is valid with the updated store.
 Example Before:
 ~~~~javascript
-{   
+{
     "_id": "192",
     "storename": "One Square",
     "category":"department",
@@ -240,14 +242,14 @@ Example Before:
 ~~~~
 `PUT /store?id=192` with body:
 ~~~~ javascript
-{   
+{
     "storename": "One Square Budson's Hay",
     "category":"clothing"
 }
 ~~~~
 The database nows looks like and should return:
 ~~~~ javascript
-{   
+{
     "_id": "192",
     "storename": "One Square Budson's Hay",
     "category":"clothing",
@@ -256,12 +258,12 @@ The database nows looks like and should return:
 ~~~~
 
 #### Reviews (15%)
-Finally to the good parts. We need user ratings for a rating app ([Have you ever had shoes without shoe strings?](https://genius.com/3392)). When a user or store gets deleted, delete all reviews involving the user or store respectively.
+Finally to the good part. We need user ratings for a rating app ([Have you ever had shoes without shoe strings?](https://genius.com/3392)). When a user or store gets deleted, delete all reviews involving the user or store respectively.
 
 - `POST /review` - A post request must have both the userID and the storeID. A rating must be between 0 to 10 inclusive. Return a 403 status if either store or user does not exist or rating is not between 0 to 10 or the combination of userID and storeID review already exist.  Below is a schema of a review. Return a 200 if the request is valid with the newly created review.
 ~~~~javascript
 {
-    "_id": {type:String}, 
+    "_id": {type:String},
     "userID": {type: String, required:true},
     "storeID":  {type: String, required:true},
     "rating": {type:Number, required:true},
@@ -269,7 +271,7 @@ Finally to the good parts. We need user ratings for a rating app ([Have you ever
 }
 ~~~~
 
-- `GET /review?id=`- Get the review with the corresponding ID. If the id does not exist, return a 404 status. 
+- `GET /review?id=`- Get the review with the corresponding ID. If the id does not exist, return a 404 status.
 
 Example `/review?id=123`
 ~~~~javascript
@@ -347,11 +349,11 @@ Example `GET /review?userid=5123`
 }
 ~~~~
 
-- `DELETE /review?id=` - Delete the review with the corresponding ID. If the id does not exist, return a 404 status. 
-- `DELETE /review?storeid=` - Delete all reviews with the corresponding storeID. If the storeID does not exist, return a 404 status. 
-- `DELETE /review?userid=` - Delete all reviews with the corresponding userID. If the userID does not exist, return a 404 status. 
+- `DELETE /review?id=` - Delete the review with the corresponding ID. If the id does not exist, return a 404 status.
+- `DELETE /review?storeid=` - Delete all reviews with the corresponding storeID. If the storeID does not exist, return a 404 status.
+- `DELETE /review?userid=` - Delete all reviews with the corresponding userID. If the userID does not exist, return a 404 status.
 - `PUT /review?id=` - Modify a review. Do not modify the storeID or userID (ignore the field). If the review doesn't exist, return a 404 status. Return a 200 with the updated review if successful.
-Example 
+Example
 
 Before
 ~~~~javascript
@@ -375,7 +377,7 @@ Before
 
 After and to return:
 ~~~~javascript
-{    
+{
     "_id":"531",
     "storeID":"132",
     "userID":"152"
@@ -402,7 +404,8 @@ Minimal styling using CSS is required. You should spend only a small amount of t
 Note that the grade for this component is largely for the JavaScript/jQuery required to update the data displayed.
 
 #### Programming style (10%)
-Good REST design and the usual attributes of good programming style. Make sure as well to comment and document your code as well as modularize if necessary. 
+Good REST design and the usual attributes of good programming style. Make sure as well to comment and document your code as well as modularize if necessary.
+
 #### Creativity and Design (10%)
 This is an opportunity for you to do little extra. It could be doing some extra work on the design of the views, particularly good error handling, tests for your REST API, or something else that you come up with. Please note that the graders will be very stingy with these marks if the basic functionality is not complete or well-implemented. Do not change any of the specifications of the backend where it would be tested (you can add extra endpoints though!)
 Some ideas include:

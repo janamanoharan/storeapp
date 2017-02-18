@@ -1,13 +1,13 @@
 # Assignment 2: Backend
 
-With the rising popularity of apps, the ratings have become a crucial part of user experience. We rat everyting from restaurants to games to [people](https://www.youtube.com/watch?v=CI4kiPaKfAE). For this assignment you'll create a simple app that rates stores. Your job is to implement a RESTful API that can digest ratings and map them to stores. It should be able to perform CRUD (Create, Read , Update , Delete) operations. For simplicity, you're not needed to implement user authentication and we encourage you to use simple functions/methods. The objective is to give you a hands-on experience with full stack application development. You will NOT be working in teams, individual submissions will be required.
+With the rising popularity of apps, the ratings have become a crucial part of user experience. We rate everyting from restaurants to games to [people](https://www.youtube.com/watch?v=CI4kiPaKfAE). For this assignment you'll create a simple app that rates stores. Your job is to implement a RESTful API that can digest ratings and map them to stores. It should be able to perform CRUD (Create, Read, Update, Delete) operations. For simplicity, you're not needed to implement user authentication and we encourage you to use simple functions/methods. The objective is to give you a hands-on experience with full stack application development. You will NOT be working in teams, individual submissions will be required.
 
 There are a lot of [backend](https://en.wikipedia.org/wiki/Comparison_of_application_servers) ([Rails](http://rubyonrails.org/), [Django](https://www.djangoproject.com/), [ASP.NET](http://asp.net), [Perfect](http://perfect.org)) and [database](http://db-engines.com/en/ranking) ([PostGreSQL](https://www.postgresql.org/), [Cassandra](http://cassandra.apache.org/), [Redis](https://redis.io/)) options, but for this assignment you will be using [Node.js](https://nodejs.org/en/) and [MongoDB](https://www.mongodb.com/). You may choose to use [Express](http://expressjs.com/), [Mongoose](http://mongoosejs.com/), [React](https://facebook.github.io/react/) or anything else if you wish in the backend. We plan to auto-mark the backend code, **so please ensure your routes works exactly as specified**.
 
-For the front end, you may choose to use any styling ([Bootstrap](http://getbootstrap.com/), [JqueryUI](http://jqueryui.com/), [Font Awesome](http://fontawesome.io/) etc.) or Javascript ([Angular](https://angularjs.org/), [React](https://facebook.github.io/react/), [JQuery](http://jquery.com/), [Ember](http://emberjs.com/), etc.) library you wish as long as the TAs are able to run the application and the UI looks intuitive.
+For the front end, you may choose to use any styling ([Bootstrap](http://getbootstrap.com/), [jQuery UI](http://jqueryui.com/), [Font Awesome](http://fontawesome.io/) etc.) or Javascript library ([Angular](https://angularjs.org/), [React](https://facebook.github.io/react/), [jQuery](http://jquery.com/), [Ember](http://emberjs.com/), etc.) you wish as long as the TAs are able to run the application and the UI looks intuitive.
 
 ### REST Specification
-You need to make sure you package.json file is configured properly so that when we run the following set of commands, it sets up automatically.
+You need to make sure your package.json file is configured properly so that when we run the following set of commands, it sets up automatically.
 
 `mongod --dbpath=./data/` - this will start the mongodb server
 
@@ -15,7 +15,7 @@ In another console
 
 `npm install` - this will install all the node packages you specified as dependencies.
 
-`npm start` - this **shoul** start your app. It will be your responsibility to make sure, this command makes your app up and running.
+`npm start` - this **should** start your app. It will be your responsibility to make sure this command starts your app.
 
 Your `package.json` would look something like
 ~~~~javascript
@@ -35,9 +35,9 @@ Lastly, make sure your app is bound to port 3000, so when we call `localhost:300
 
 #### Users (10%)
 
-The API should be able to perform CRUD operations on users (what kind of rating app would it be with no users?). The JSON specifications of a user is below under `POST /users`.
+The API should be able to perform CRUD operations on users (what kind of rating app would it be with no users?). The JSON specifications of a user is below, under `POST /users`.
 
- - `GET /users`  Get all the users, ordered by username ascending, in an array in the key `users`.
+ - `GET /users`  Get all the users, ordered by username ascending, in an array under the key `users`.
  - `GET /users?query` Same as above and filtered (exact) by the possible query:
     - `firstname`
     - `lastname`
@@ -79,7 +79,7 @@ An example would be `/users?firstname=Tom&sex=M` could return a JSON object cont
 #### Individual Users (15%)
 Here’s the part where we want to be able to get and modify users.
 
-- `POST /user` - In the body of the post request, supply all required fields and support any optional fields. See below on the schema required. If the username provided already exist or not provided, return a 403 status. If the request is valid, return a 200 status with the new user returned.
+- `POST /user` - In the body of the post request, supply all required fields and support any optional fields. See below on the schema required. If the username provided already exists or is not provided, return a 403 status. If the request is valid, return a 200 status with the new user returned.
 
 NOTE: There are multiple ways to go about making a username unique. Your `_id` field therefore may be different from above but ensure your `username` field is always there! 
 
@@ -96,7 +96,7 @@ NOTE: There are multiple ways to go about making a username unique. Your `_id` f
 
 - `GET /user?id=` - Get a user by a specific ID. All objects therefore must have a `_id` field. If the ID given does not exist, return a 404 status.
 
-An example would be `/user?id=192` could return
+An example would be `/user?id=192` returns
 
  ~~~~javascript
  {
@@ -111,7 +111,7 @@ An example would be `/user?id=192` could return
 
 - `GET /user?username=` - Get a user by a specific username. If the username given does not exist, return a 404 status.
 
-An example would be `/user?username=m1ssionP0zzible` could return
+An example would be `/user?username=m1ssionP0zzible` returns
 
  ~~~~javascript
  {
@@ -125,7 +125,7 @@ An example would be `/user?username=m1ssionP0zzible` could return
 
 ~~~~
 
-- `DELETE /user?id=`  -Deletes a user by a specific ID. Return 404 if the user doesn't exist. When deleting a user, also delete their reviews. (See below). e,g,
+- `DELETE /user?id=`  -Deletes a user by a specific ID. Return 404 if the user doesn't exist. When deleting a user, also delete their reviews. (See below). e.g.
 `/user?id=192` would remove the user with 192 as their id. Calling it again would result in a 404 response.
 
 - `PUT /user?id=` - Updates an already existing user via the body. If the username key is passed as well, ignore the username key. If the user doesn't exist, return a 404 error. If the request is valid, return a 200 with the updated user returned. We'll assume all fields passed are fields in the user schema.
@@ -217,7 +217,7 @@ For stores, chains may share the same name. Therefore, their only identifier is 
 ~~~~
 
 - `GET /store?id=` - Get a store by a specific ID. All objects therefore must have a `_id` field. If the ID given does not exist, return a 404 status.
-An example would be `/store?id=192` could return
+An example would be `/store?id=192` returns
  ~~~~javascript
 {
     "_id": "192",
@@ -260,7 +260,7 @@ The database nows looks like and should return:
 #### Reviews (15%)
 Finally to the good part. We need user ratings for a rating app ([Have you ever had shoes without shoe strings?](https://genius.com/3392)). When a user or store gets deleted, delete all reviews involving the user or store respectively.
 
-- `POST /review` - A post request must have both the userID and the storeID. A rating must be between 0 to 10 inclusive. Return a 403 status if either store or user does not exist or rating is not between 0 to 10 or the combination of userID and storeID review already exist.  Below is a schema of a review. Return a 200 if the request is valid with the newly created review.
+- `POST /review` - A post request must have both the userID and the storeID. A rating must be from 0 to 10 inclusive. Return a 403 status if either store or user does not exist, the rating is not from 0 to 10, or the combination of userID and storeID review already exists.  Below is a schema of a review. Return a 200 if the request is valid with the newly created review.
 ~~~~javascript
 {
     "_id": {type:String},
@@ -353,7 +353,7 @@ Example `GET /review?userid=5123`
 - `DELETE /review?storeid=` - Delete all reviews with the corresponding storeID. If the storeID does not exist, return a 404 status.
 - `DELETE /review?userid=` - Delete all reviews with the corresponding userID. If the userID does not exist, return a 404 status.
 - `PUT /review?id=` - Modify a review. Do not modify the storeID or userID (ignore the field). If the review doesn't exist, return a 404 status. Return a 200 with the updated review if successful.
-Example
+Example:
 
 Before
 ~~~~javascript
@@ -388,7 +388,7 @@ After and to return:
 
 Congratulations! You have finished building the backend of your rating app!
 #### Front End (20%)
-The frontend should provides a list of possible operations to the user. You can think of this list a navigation menu. Basically, for every backend endpoint, there is some way in the front end that can fully utilize that backend. The list of front end functions could be:
+The frontend should provide a list of possible operations to the user. You can think of this list as a navigation menu. Basically, for every backend endpoint, there is some way in the front end that can fully utilize that backend. The list of front end functions could be:
 
 - CRUD individual users
 - CRUD individual stores
@@ -407,8 +407,8 @@ Note that the grade for this component is largely for the JavaScript/jQuery requ
 Good REST design and the usual attributes of good programming style. Make sure as well to comment and document your code as well as modularize if necessary.
 
 #### Creativity and Design (10%)
-This is an opportunity for you to do little extra. It could be doing some extra work on the design of the views, particularly good error handling, tests for your REST API, or something else that you come up with. Please note that the graders will be very stingy with these marks if the basic functionality is not complete or well-implemented. Do not change any of the specifications of the backend where it would be tested (you can add extra endpoints though!)
+This is an opportunity for you to do a little extra. It could be some extra work on the design of the views, particularly good error handling, tests for your REST API, or something else that you come up with. Please note that the graders will be very stingy with these marks if the basic functionality is not complete or well-implemented. Do not change any of the specifications of the backend where it would be tested (you can add extra endpoints though!)
 Some ideas include:
 - Displaying the average review for a store or user
 - Changing the front end display / responsive design
-- Get the number of categories and display them as well
+- Getting the number of categories and displaying them as well

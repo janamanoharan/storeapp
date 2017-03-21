@@ -10,12 +10,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: true} ));
 var server = require('http').Server(app);
 
-// // database setup
-// mongoose.connect("mongodb://localhost:27017/serverDB", function(err, db) {
-//   if(!err) {
-//     console.log("Connection successful");
-//   }
-// });
+// database setup
+mongoose.connect("mongodb://localhost:27017/ratingApp", function(err, db) {
+  if(!err) {
+    console.log("Connection successful");
+  }
+});
 
 var hostname = 'localhost';
 var port = 3000;

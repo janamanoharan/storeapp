@@ -28,4 +28,5 @@ var userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.index({_id : 1});
 module.exports = mongoose.model('User', userSchema);

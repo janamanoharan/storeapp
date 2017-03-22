@@ -28,9 +28,10 @@ module.exports = function(app) {
                     });
             }
         };
-        // case 1: no params
+        // case 1: no filters
         if (length == 0) {
-            Users.find({}, callback);
+            Users.find({}).sort({username: 1}).exec(callback);
+        // case 2: 1 fiter given
         } else if (length == 1) {
             if (firstname) {
                 Users.find({firstname: firstname}, callback);
@@ -41,6 +42,7 @@ module.exports = function(app) {
             } else if (sex) {
                 Users.find({sex: sex}, callback);                
             } 
+        // case 3: 2 filters given
         } else if (length == 2) {
             if (firstname && lastname) {
                 Users.find({firstname: firstname, lastname: lastname}, callback);                
@@ -55,6 +57,7 @@ module.exports = function(app) {
             } else if (age && sex) {
                 Users.find({age: age, sex: sex}, callback);                                
             } 
+        // case 4: 3 filters given
         } else if (length == 3) {
             if (!firstname) {
                 Users.find({lastname: lastname, age: age, sex: sex}, callback);
@@ -66,12 +69,14 @@ module.exports = function(app) {
                 Users.find({lastname: lastname, firstname: firstname, age: age}, callback);                
             }
         } else {
+            // apply all the filters
             Users.find({lastname: lastname, firstname: firstname, sex: sex, age: age}, callback);                
             
         }
         
     });
 
+    // get the user by id or username
     app.get('/user', function(req, res) {
         var id = req.query.id;
         var username = req.query.username;
@@ -100,6 +105,7 @@ module.exports = function(app) {
         }
     });
 
+    // create a new user if it doesn't exist
     app.post('/user', function(req, res) {
         var username =  req.body.username;
         var firstname =  req.body.firstname;
@@ -135,6 +141,7 @@ module.exports = function(app) {
         });
     });
 
+    // update the user's information
     app.put('/user', function(req, res) {
         var id = req.query.id;
         var firstname = req.body.firstname;
@@ -161,6 +168,7 @@ module.exports = function(app) {
         }); 
     });
 
+    // delete a user
     app.delete('/user', function(req, res) {
         var id = req.query.id;
         console.log(id);

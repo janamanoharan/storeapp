@@ -167,7 +167,7 @@ module.exports = function(app) {
             } else {
                 res.status(200)
                 .json({
-                    status: 'error',
+                    status: 'success',
                     data: {},
                     message: 'updated' 
                 });
@@ -191,7 +191,7 @@ module.exports = function(app) {
                 // TODO delete reviews
                 res.status(200)
                 .json({
-                    status: 'error',
+                    status: 'success',
                     data: {},
                     message: 'deleted the user' 
                 });

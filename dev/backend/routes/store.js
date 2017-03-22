@@ -53,7 +53,7 @@ module.exports = function(app) {
                 .json({
                     status: 'success',
                     data: stores,
-                    message: 'retrieved id'
+                    message: 'retrieved store'
                 });
             }
         });
@@ -72,33 +72,22 @@ module.exports = function(app) {
                 message: "no name provided; cannot create store"
             })
         }
-        Stores.find({storename: store}, function(err, stores) {
-            if (users.length == 0) {
-                var newStore = new Stores({
-                    storename: storename,
-                    department: department,
-                    address: address,
-                });
+        var newStore = new Stores({
+            storename: storename,
+            department: department,
+            address: address,
+        });
 
-                newStore.save();
-                res.status(200)
-                .json({
-                    status: 'success',
-                    data: {},
-                    message: 'Store created'
-                });
-            } else {
-                res.status(403)
-                .json({
-                    status: 'error',
-                    data: {},
-                    message: err
-                });
-            }
+        newStore.save();
+        res.status(200)
+        .json({
+            status: 'success',
+            data: {},
+            message: 'Store created'
         });
     });
 
-    // update the user's information
+    // update the store's information
     app.put('/store', function(req, res) {
         var id = req.query.id;
         var storename = req.body.storename;
@@ -116,7 +105,7 @@ module.exports = function(app) {
             } else {
                 res.status(200)
                 .json({
-                    status: 'error',
+                    status: 'success',
                     data: {},
                     message: 'updated' 
                 });
@@ -139,7 +128,7 @@ module.exports = function(app) {
                 // TODO delete reviews
                 res.status(200)
                 .json({
-                    status: 'error',
+                    status: 'success',
                     data: {},
                     message: 'deleted the store' 
                 });

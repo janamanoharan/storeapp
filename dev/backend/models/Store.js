@@ -19,4 +19,5 @@ var storeSchema = new mongoose.Schema({
         }
 });
 
+storeSchema.index({_id : 1});
 module.exports = mongoose.model('Store', storeSchema);

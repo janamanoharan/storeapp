@@ -7,11 +7,11 @@ module.exports = function(app) {
     // make a new review given that it is valid
     app.post('/review', function(req, res) {
         var storeId = req.body.storeID;
-        var userId = req.body.storeID;
+        var userId = req.body.userID;
         var rating = req.body.rating;
-        var comment = req.query.comment;
+        var comment = req.body.comment;
 
-        var validIds = (storeId && userIds);
+        var validIds = (storeId && userId);
         var validRating = ((rating >= 0) && (rating <= 10));
         
         if (! (validIds && validRating)) {
@@ -23,10 +23,13 @@ module.exports = function(app) {
             });
         } else {
             // see if the user exists
-            Users.find({_id: storeId}, function(err, user) {
+            Users.find({_id: userId}, function(err, user) {
+                console.log(userId);
+                console.log(user);
+                
                 if (user.length > 0) {
                     // see if store exists
-                    Stores.find({_id: userId}, function(err, store) {
+                    Stores.find({_id: storeId}, function(err, store) {
                         if (store.length > 0) {
                             // valid
                             var newReview = new Reviews({
@@ -96,7 +99,7 @@ module.exports = function(app) {
     });
 
     // update the store's information
-    app.put('/store', function(req, res) {
+    app.put('/review', function(req, res) {
         var id = req.query.id;
         var rating = req.body.rating;
         var comment = req.body.comment;
@@ -123,7 +126,7 @@ module.exports = function(app) {
         } else {
             options = {rating: rating};
         }
-        Stores.findOneAndUpdate({_id: id}, options, callback); 
+        Reviews.findOneAndUpdate({_id: id}, options, {new: true}, callback); 
     });
 
     app.delete('/review', function(req, res) {

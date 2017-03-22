@@ -94,7 +94,7 @@ module.exports = function(app) {
         var department = req.body.department;
         var address = req.body.address;
         
-        Stores.findOneAndUpdate({_id: id}, {storename: storename, department: department, address: address}, function(err, store) {
+        Stores.findOneAndUpdate({_id: id}, {storename: storename, department: department, address: address}, {new: true}, function(err, store) {
             if (err) {
                 res.status(404)
                 .json({

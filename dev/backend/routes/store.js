@@ -82,7 +82,7 @@ module.exports = function(app) {
         res.status(200)
         .json({
             status: 'success',
-            data: {},
+            data: newStore,
             message: 'Store created'
         });
     });
@@ -94,7 +94,7 @@ module.exports = function(app) {
         var department = req.body.department;
         var address = req.body.address;
         
-        Stores.findOneAndUpdate({_id: id}, {storename: storename, department: department, address: address}, function(err) {
+        Stores.findOneAndUpdate({_id: id}, {storename: storename, department: department, address: address}, function(err, store) {
             if (err) {
                 res.status(404)
                 .json({
@@ -106,7 +106,7 @@ module.exports = function(app) {
                 res.status(200)
                 .json({
                     status: 'success',
-                    data: {},
+                    data: store,
                     message: 'updated' 
                 });
             }

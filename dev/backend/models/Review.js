@@ -21,4 +21,5 @@ var reviewSchema = new mongoose.Schema({
     }
 });
 
+reviewSchema.index({_id : 1});
 module.exports = mongoose.model('Review', reviewSchema);

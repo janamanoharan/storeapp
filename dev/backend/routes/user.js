@@ -134,7 +134,7 @@ module.exports = function(app) {
                 res.status(200)
                 .json({
                     status: 'success',
-                    data: {},
+                    data: newUser,
                     message: 'User created'
                 });
             } else {
@@ -156,7 +156,7 @@ module.exports = function(app) {
         var age = req.body.age;
         var sex = req.body.sex;
         
-        Users.findOneAndUpdate({_id: id}, {firstname: firstname, lastname: lastname, age: age, sex: sex}, function(err) {
+        Users.findOneAndUpdate({_id: id}, {firstname: firstname, lastname: lastname, age: age, sex: sex}, function(err, user) {
             if (err) {
                 res.status(404)
                 .json({
@@ -168,7 +168,7 @@ module.exports = function(app) {
                 res.status(200)
                 .json({
                     status: 'success',
-                    data: {},
+                    data: user,
                     message: 'updated' 
                 });
             }

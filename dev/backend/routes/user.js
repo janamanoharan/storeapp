@@ -112,7 +112,14 @@ module.exports = function(app) {
         var lastname =  req.body.lastname;
         var age =  req.body.age;
         var sex =  req.body.sex;
-
+        if (!username) {
+            res.status(403)
+            .json({
+                status: "failed",
+                data: {},
+                message: "no username provided; cannot create user"
+            })
+        }
         Users.find({username: username}, function(err, users) {
             if (users.length == 0) {
                 var newUser = new Users({

@@ -20,7 +20,7 @@ module.exports = function(app) {
                 .json({
                     status: 'success',
                     data: stores,
-                    message: 'retrieved users'
+                    message: 'retrieved stores'
                 });
             }
         };
@@ -38,6 +38,112 @@ module.exports = function(app) {
 
     // get a store by id
     app.get('/store', function(req, res) {
+        var id = req.query.id;
+
+        Stores.find({_id: id}, function(err, stores) {
+            if (err) {
+                res.status(404)
+                .json({
+                    status: 'failed',
+                    data: {},
+                    message: 'could not retrieve store with id:' + id
+                });
+            } else {
+                res.status(200)
+                .json({
+                    status: 'success',
+                    data: stores,
+                    message: 'retrieved id'
+                });
+            }
+        });
+    });
+
+    app.post('/store', function(req, res) {
+        var storename = req.body.storename;
+        var department = req.body.department;
+        var address = req.body.address;
         
+        if (!storename) {
+            res.status(403)
+            .json({
+                status: "failed",
+                data: {},
+                message: "no name provided; cannot create store"
+            })
+        }
+        Stores.find({storename: store}, function(err, stores) {
+            if (users.length == 0) {
+                var newStore = new Stores({
+                    storename: storename,
+                    department: department,
+                    address: address,
+                });
+
+                newStore.save();
+                res.status(200)
+                .json({
+                    status: 'success',
+                    data: {},
+                    message: 'Store created'
+                });
+            } else {
+                res.status(403)
+                .json({
+                    status: 'error',
+                    data: {},
+                    message: err
+                });
+            }
+        });
+    });
+
+    // update the user's information
+    app.put('/store', function(req, res) {
+        var id = req.query.id;
+        var storename = req.body.storename;
+        var department = req.body.department;
+        var address = req.body.address;
+        
+        Stores.findOneAndUpdate({_id: id}, {storename: storename, department: department, address: address}, function(err) {
+            if (err) {
+                res.status(404)
+                .json({
+                    status: 'failed',
+                    data: {},
+                    message: err
+                });
+            } else {
+                res.status(200)
+                .json({
+                    status: 'error',
+                    data: {},
+                    message: 'updated' 
+                });
+            }
+        }); 
+    });
+
+    // delete a store
+    app.delete('/store', function(req, res) {
+        var id = req.query.id;
+        Stores.findOneAndRemove({_id: id}, function(err) {
+            if (err) {
+                res.status(404)
+                .json({
+                    status: 'failed',
+                    data: {},
+                    message: id
+                });
+            } else {
+                // TODO delete reviews
+                res.status(200)
+                .json({
+                    status: 'error',
+                    data: {},
+                    message: 'deleted the store' 
+                });
+            }
+        }); 
     });
 };

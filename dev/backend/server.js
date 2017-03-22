@@ -20,6 +20,8 @@ mongoose.connect("mongodb://localhost:27017/ratingapp", function(err, db) {
 });
 
 var userRoute = require('./routes/user')(app);
+var storeRoute = require('./routes/store')(app);
+
 
 // listening setup
 var hostname = 'localhost';

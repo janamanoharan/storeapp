@@ -19,9 +19,11 @@ mongoose.connect("mongodb://localhost:27017/ratingapp", function(err, db) {
     }
 });
 
+var userRoute = require('./routes/user')(app);
+
 // listening setup
 var hostname = 'localhost';
-var port = 3000;
+var port = 8080;
 
 server.listen(process.env.PORT || port, function () {
     console.log(`Backend server running at http://${hostname}:${port}/`);

@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
  * User schema: represents a User in the Rating App
  */
 var userSchema = new mongoose.Schema({
-   "username": { 
+    "username": { 
         type: String,
         required: true,
         unique:true

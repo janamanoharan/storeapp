@@ -3,7 +3,6 @@ import { Col, Row, Input, Icon, Button } from 'react-materialize';
 import { hashHistory } from 'react-router';
 import 'whatwg-fetch';
 
-
 let utils = require('../utils.js');
 let json = utils.json;
 
@@ -23,7 +22,6 @@ export default class App extends Component {
     if (!unameValid) {
         Materialize.toast('Username has to be atleast 4 characters long', 2000);
     }
-    console.log(uname)
     // hook to backend
     if (unameValid) {
         fetch('/findUser?username=' + uname, { method: 'GET' })
@@ -33,7 +31,7 @@ export default class App extends Component {
                     const user = data.data[0]; 
                     console.log("HAHA");      
                     hashHistory.push({
-                        pathname: `/profile`,
+                        pathname: `/home`,
                         state: { data: user }
                     })
                 } else {

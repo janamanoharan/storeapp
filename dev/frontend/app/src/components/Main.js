@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
-import Navbar from './Navbar';
-import { Col, Row, Input, Icon, Button } from 'react-materialize';
+import { Col, Row, Input, Icon, Button, Navbar, NavItem } from 'react-materialize';
+
 import Login from './Login'
 import Register from './Register'
 
@@ -22,10 +22,9 @@ export default class App extends Component {
         }
         var buttonStyle = {marginLeft: "2%"}
 
-
     return (
         <Row>
-            <Navbar style={style}/>
+            <Navbar style={style} brand='RestaurApp' left />
             <Login />
             <Register />
         </Row>

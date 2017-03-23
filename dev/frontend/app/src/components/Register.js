@@ -1,7 +1,10 @@
 import React, { Component } from 'react'; 
-import Navbar from './Navbar';
 import { Col, Row, Input, Icon, Button } from 'react-materialize';
+import { hashHistory } from 'react-router';
+import Home from './Home';
 
+let utils = require('../utils.js');
+let json = utils.json;
 
 export default class App extends Component {
     constructor() {
@@ -17,10 +20,20 @@ export default class App extends Component {
         var nameRegex = /^([A-Za-z]{1,})$/;
         var ageRegex = /^([0-9]{1,2})$/;
 
-        let uname = document.getElementById("uname").value;
+        var uname = document.getElementById("username").value;
+        console.log(uname);
         let fname = document.getElementById("fname").value;
+        console.log(fname);
+        
         let lname = document.getElementById("lname").value;
         let age = document.getElementById("age").value;
+        let gender = document.getElementById("gender").value;
+        console.log(lname);
+        console.log(age);
+        console.log(gender);
+        console.log(uname.length);
+        
+        
         
 
         let unameValid = usernameRegex.test(uname);
@@ -34,8 +47,44 @@ export default class App extends Component {
         if (!(fname && lname)) {
             Materialize.toast('Enter a valid name', 2000);
         }
-        if (!age) {
+        if (!ageValid) {
             Materialize.toast('Enter a valid age', 2000);        
+        }
+
+        if (unameValid && fnameValid && ageValid) {
+            fetch('/createUser', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: uname,
+                    firstname: fname,
+                    lastname: lname,
+                    age: age,
+                    sex: gender
+                })
+            })
+            .then(json)
+            .then(function(data) {
+                console.log(data);
+                if (data.status === 'error') {
+                    Materialize.toast('Username is taken!', 3000);
+                } else {
+                    const newUser = data.data;
+                    hashHistory.push({
+                        pathname: `/home`,
+                        state: {
+                            data : newUser 
+                        }
+                    });
+                }
+            })
+            .catch(function(err) {
+                throw err;
+            });
         }
     }
 
@@ -51,11 +100,11 @@ export default class App extends Component {
             <Col s={5} style={style2}>
                 <h3>Join RestaurApp!</h3>
                 <Row>
-                    <Input className='validate' pattern='[a-zA-Z0-9].{4,}' id='uname' s={12} label="Username"><Icon>account_circle</Icon></Input>
+                    <Input className='validate' pattern='[a-zA-Z].{4,}' id='username' s={12} label="Username" />
                     <Input className='validate' pattern='[a-zA-Z].{1,}' id='fname' s={6} label="First Name"><Icon>stars</Icon></Input>
                     <Input className='validate' pattern='[a-zA-Z].{1,}' id='lname' s={6} label="Last Name"></Input>
                     <Input className='validate' pattern='[0-9].{1,2}' id='age' s={6} label="Age"><Icon>vpn_key</Icon></Input>
-                    <Input s={6} type='select' label="Gender" defaultValue='M'>
+                    <Input s={6} type='select' label="Gender" id='gender' defaultValue='M'>
                         <option value='M'>Male</option>
                         <option value='F'>Female</option>
                     </Input>
@@ -65,3 +114,5 @@ export default class App extends Component {
         );
     }
 }
+// <Input className='validate' pattern='[a-zA-Z0-9].{4,}' id='uname' s={12} label="Username"><Icon>stars</Icon></Input>
+                    

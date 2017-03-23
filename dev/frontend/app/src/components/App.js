@@ -9,6 +9,7 @@ import {
 } from 'react-router';
 
 import Main from './Main';
+import Home from './Home';
 import Profile from './Profile';
 
 
@@ -23,7 +24,9 @@ export default class App extends Component {
     return (
         <Router history={hashHistory}>
             <Route path='/' component={Main}/>
+            <Route path='/home' component={Home}/>
             <Route path='/profile' component={Profile}/>
+            
         </Router>
     );
   }

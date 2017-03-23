@@ -82,7 +82,7 @@ module.exports = function(app) {
         var username = req.query.username;
         var callback =  function(err, users) {
             if (err) {
-                res.status(404)
+                res.status(400)
                     .json({
                         status: 'error',
                         data: {},
@@ -116,6 +116,7 @@ module.exports = function(app) {
 
     // create a new user if it doesn't exist
     app.post('/user', function(req, res) {
+        console.log(req.body);
         var username =  req.body.username;
         var firstname =  req.body.firstname;
         var lastname =  req.body.lastname;
@@ -147,6 +148,7 @@ module.exports = function(app) {
                     message: 'User created'
                 });
             } else {
+                console.log("user exists");
                 res.status(403)
                 .json({
                     status: 'failed',
@@ -159,12 +161,15 @@ module.exports = function(app) {
 
     // update the user's information
     app.put('/user', function(req, res) {
+        console.log(req.query);
+        console.log(req.body);        
         var id = req.query.id;
         var firstname = req.body.firstname;
         var lastname = req.body.lastname;
         var age = req.body.age;
         var sex = req.body.sex;
         
+
         Users.findOneAndUpdate({_id: id}, {firstname: firstname, lastname: lastname, age: age, sex: sex}, {new: true}, function(err, user) {
             if (err) {
                 res.status(404)
@@ -178,16 +183,15 @@ module.exports = function(app) {
                 .json({
                     status: 'success',
                     data: user,
-                    message: 'updated' + user
+                    message: 'updated'
                 });
             }
         }); 
     });
 
-    // delete a user
+    // delete a user //TODO delete by username
     app.delete('/user', function(req, res) {
         var id = req.query.id;
-        console.log(id);
         Users.findOneAndRemove({_id: id}, function(err) {
             if (err) {
                 res.status(404)

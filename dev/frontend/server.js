@@ -172,6 +172,11 @@ var makeDeleteRequest = function (route, qParams, req, res) {
 //         });
 // }
 
+app.get('/getUsers', function(req, res) {
+    makeGetRequest('/users', req.query, req, res);
+});
+
+
 app.get('/findUser', function(req, res) {
     makeGetRequest('/user', req.query, req, res);
 });
@@ -184,6 +189,12 @@ app.post('/createUser', function(req, res) {
     console.log(req.body);
     makePostRequest('/user', req.body, req, res);
 });
+
+app.post('/createStore', function(req, res) {
+    console.log(req.body);
+    makePostRequest('/store', req.body, req, res);
+});
+
 
 app.delete('/deleteUser', function(req, res) {
     makeDeleteRequest('/user', req.query, req, res);

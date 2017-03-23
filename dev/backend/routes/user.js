@@ -89,12 +89,21 @@ module.exports = function(app) {
                         message: err
                     });
             } else {
-                res.status(200)
+                if (users.length == 0) {
+                    res.status(404)
                     .json({
-                        status: 'success',
-                        data: users,
-                        message: "Successfully filtered users"
+                        status: 'error',
+                        data: {},
+                        message: err
                     });
+                } else {
+                    res.status(200)
+                        .json({
+                            status: 'success',
+                            data: users,
+                            message: "Successfully retrieved user"
+                        });
+                }
             }
         };
         

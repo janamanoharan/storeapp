@@ -98,9 +98,9 @@ export default class App extends Component {
 
         return (
             <Col s={5} style={style2}>
-                <h3>Join RestaurApp!</h3>
+                <h3>Join ShopRates!</h3>
                 <Row>
-                    <Input className='validate' pattern='[a-zA-Z].{4,}' id='username' s={12} label="Username" />
+                    <Input className='validate' pattern='[a-zA-Z].{4,}' id='username' s={12} label="Username"><Icon>stars</Icon></Input>
                     <Input className='validate' pattern='[a-zA-Z].{1,}' id='fname' s={6} label="First Name"><Icon>stars</Icon></Input>
                     <Input className='validate' pattern='[a-zA-Z].{1,}' id='lname' s={6} label="Last Name"></Input>
                     <Input className='validate' pattern='[0-9].{1,2}' id='age' s={6} label="Age"><Icon>vpn_key</Icon></Input>
@@ -114,5 +114,5 @@ export default class App extends Component {
         );
     }
 }
-// <Input className='validate' pattern='[a-zA-Z0-9].{4,}' id='uname' s={12} label="Username"><Icon>stars</Icon></Input>
+// <Input className='validate' pattern='[a-zA-Z0-9].{4,}' id='uname' s={12} label="Username">
                     

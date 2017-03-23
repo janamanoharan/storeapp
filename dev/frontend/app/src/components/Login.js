@@ -29,7 +29,6 @@ export default class App extends Component {
             .then(function(data) {
                 if (data.status === "success") {
                     const user = data.data[0]; 
-                    console.log("HAHA");      
                     hashHistory.push({
                         pathname: `/home`,
                         state: { data: user }

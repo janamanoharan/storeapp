@@ -4,6 +4,7 @@ module.exports = function(app) {
 
     // get all the stores in the database
     app.get('/stores', function(req, res) {
+        console.log(req.query);
         var storename = req.query.storename;
         var category = req.query.category;
 
@@ -61,7 +62,7 @@ module.exports = function(app) {
 
     app.post('/store', function(req, res) {
         var storename = req.body.storename;
-        var department = req.body.department;
+        var category = req.body.category;
         var address = req.body.address;
         
         if (!storename) {
@@ -74,7 +75,7 @@ module.exports = function(app) {
         }
         var newStore = new Stores({
             storename: storename,
-            department: department,
+            category: category,
             address: address,
         });
 
@@ -91,10 +92,10 @@ module.exports = function(app) {
     app.put('/store', function(req, res) {
         var id = req.query.id;
         var storename = req.body.storename;
-        var department = req.body.department;
+        var category = req.body.category;
         var address = req.body.address;
         
-        Stores.findOneAndUpdate({_id: id}, {storename: storename, department: department, address: address}, {new: true}, function(err, store) {
+        Stores.findOneAndUpdate({_id: id}, {storename: storename, category: category, address: address}, {new: true}, function(err, store) {
             if (err) {
                 res.status(404)
                 .json({
@@ -113,9 +114,38 @@ module.exports = function(app) {
         }); 
     });
 
-    // delete a store
+    // delete a store // TODO
     app.delete('/store', function(req, res) {
         var id = req.query.id;
+        Stores.find({_id: id}, function(err, store) {
+            if (store.length == 0) {
+                res.status(404)
+                .json({
+                    status: 'failed',
+                    data: {},
+                    message: id
+                });
+            } else {
+                Stores.findOneAndRemove({_id: id}, function(err) {
+                    if (err) {
+                        res.status(404)
+                        .json({
+                            status: 'failed',
+                            data: {},
+                            message: id
+                        });
+                    } else {
+                        // TODO delete reviews
+                        res.status(200)
+                        .json({
+                            status: 'success',
+                            data: {},
+                            message: 'deleted the store' 
+                        });
+                    }
+                });                
+            }
+        });        
         Stores.findOneAndRemove({_id: id}, function(err) {
             if (err) {
                 res.status(404)

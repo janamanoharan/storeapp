@@ -24,7 +24,7 @@ export default class App extends Component {
 
     return (
         <Row>
-            <Navbar style={style} brand='RestaurApp' left />
+            <Navbar style={style} brand='ShopRates' left />
             <Login />
             <Register />
         </Row>

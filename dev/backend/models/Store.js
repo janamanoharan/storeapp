@@ -9,7 +9,7 @@ var storeSchema = new mongoose.Schema({
             type: String,
             required:true
         },
-        "department": {
+        "category": {
              type: String,
              default:""
         },

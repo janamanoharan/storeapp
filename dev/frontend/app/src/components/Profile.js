@@ -25,6 +25,8 @@ export default class Profile extends Component {
 
         this.goHome = this.goHome.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        
    }
 
     handleClick(e) {
@@ -84,6 +86,22 @@ export default class Profile extends Component {
 
 
     }
+
+    handleDelete(e) {
+        e.preventDefault();
+       fetch('/deleteUser?username=' + this.state.username, { method: 'DELETE' })
+            .then(json)
+            .then(function(data) {
+                const user = data.data[0]; 
+                hashHistory.push({
+                    pathname: `/`
+                })
+                
+            })
+            .catch(function(err) {
+                throw err;
+            });
+    }
     goHome() {
     var user = {
         _id: this.state.id,
@@ -126,6 +144,7 @@ export default class Profile extends Component {
                     </Input>
                 <Button onClick={this.handleClick} waves='light' type='submit'>Update Profile</Button>
                 </Row>
+                <Button onClick={this.handleDelete} waves='light' type='submit'>Delete Account</Button>                
                 </div>
             </Row>
         )

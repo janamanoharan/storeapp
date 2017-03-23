@@ -192,7 +192,8 @@ module.exports = function(app) {
     // delete a user //TODO delete by username
     app.delete('/user', function(req, res) {
         var id = req.query.id;
-        Users.findOneAndRemove({_id: id}, function(err) {
+        var username = req.query.username;
+        var callback = function(err) {
             if (err) {
                 res.status(404)
                 .json({
@@ -209,6 +210,12 @@ module.exports = function(app) {
                     message: 'deleted the user' 
                 });
             }
-        }); 
+        };
+
+        if (id) {
+            Users.findOneAndRemove({_id: id}, callback);
+        } else {
+            Users.findOneAndRemove({username: username}, callback);            
+        } 
     });
 };

@@ -93,6 +93,46 @@ var makePostRequest = function (route, qBody, req, res) {
                 });
         })
 }
+
+var makeDeleteRequest = function (route, qParams, req, res) {
+    var options = {
+        uri: 'http://localhost:8080' + route,
+        method: 'DELETE',
+        qs: qParams
+    }
+
+    request(options)  
+        .then(function (dataRecvd) {
+            dataRecvd = JSON.parse(dataRecvd);
+            
+            // Request was successful
+            if (dataRecvd.status === "success") {
+                res.status(200)
+                    .json({
+                        status: dataRecvd.status,
+                        data: dataRecvd["data"],
+                        message: dataRecvd.message
+                    });
+            } else {
+                res.status(400)
+                    .json({
+                        status: dataRecvd.status,
+                        data: dataRecvd["data"],
+                        message: dataRecvd.message
+                    });
+            }
+        })
+        .catch(function (err) {
+            // An error occurred
+            res.status(400).
+            json({
+                status: 'error',
+                data: {},
+                message: 'An error occurred'
+            });
+        });
+}
+
 // var makePutRequest = function (route, qParams, req, res) {
 //     var options = {
 //         uri: 'http://localhost:8080' + route,
@@ -136,10 +176,19 @@ app.get('/findUser', function(req, res) {
     makeGetRequest('/user', req.query, req, res);
 });
 
+app.get('/getStores', function(req, res) {
+    makeGetRequest('/stores', req.query, req, res);
+});
+
 app.post('/createUser', function(req, res) {
     console.log(req.body);
     makePostRequest('/user', req.body, req, res);
 });
+
+app.delete('/deleteUser', function(req, res) {
+    makeDeleteRequest('/user', req.query, req, res);
+});
+
 // app.put('/updateUser', function(req, res) {
 
 //     makePutRequest('/user', req.query, req, res);

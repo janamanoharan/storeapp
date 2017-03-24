@@ -189,17 +189,15 @@ app.get('/getReviews', function(req, res) {
 });
 
 app.post('/createUser', function(req, res) {
-    console.log(req.body);
     makePostRequest('/user', req.body, req, res);
 });
 
 app.post('/createStore', function(req, res) {
-    console.log(req.body);
+    
     makePostRequest('/store', req.body, req, res);
 });
 
 app.post('/createReview', function(req, res) {
-    console.log(req.body);
     makePostRequest('/review', req.body, req, res);
 });
 

@@ -89,7 +89,7 @@ export default class Profile extends Component {
 
     handleDelete(e) {
         e.preventDefault();
-       fetch('/deleteUser?username=' + this.state.username, { method: 'DELETE' })
+       fetch('/deleteUser?username=' + this.state.username + '&id=' + this.state.id, { method: 'DELETE' })
             .then(json)
             .then(function(data) {
                 const user = data.data[0]; 

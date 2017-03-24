@@ -1,5 +1,5 @@
 var Stores = require('../models/Store');
-
+var Reviews = require('../models/Review');
 module.exports = function(app) {
 
     // get all the stores in the database
@@ -127,42 +127,25 @@ module.exports = function(app) {
                 });
             } else {
                 Stores.findOneAndRemove({_id: id}, function(err) {
-                    if (err) {
+                    if (!err) {
+                        Reviews.remove({ storeID: id }, function(err) {
+                            res.status(200)
+                            .json({
+                                status: 'success',
+                                data: {},
+                                message:  "error occured"
+                            });
+                        });
+                    } else {
                         res.status(404)
                         .json({
                             status: 'failed',
                             data: {},
                             message: id
-                        });
-                    } else {
-                        // TODO delete reviews
-                        res.status(200)
-                        .json({
-                            status: 'success',
-                            data: {},
-                            message: 'deleted the store' 
-                        });
+                        }); 
                     }
                 });                
             }
         });        
-        Stores.findOneAndRemove({_id: id}, function(err) {
-            if (err) {
-                res.status(404)
-                .json({
-                    status: 'failed',
-                    data: {},
-                    message: id
-                });
-            } else {
-                // TODO delete reviews
-                res.status(200)
-                .json({
-                    status: 'success',
-                    data: {},
-                    message: 'deleted the store' 
-                });
-            }
-        }); 
     });
 };

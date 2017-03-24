@@ -1,4 +1,5 @@
 var Users = require('../models/User');
+var Reviews = require('../models/Review');
 
 module.exports = function(app) {
     
@@ -116,7 +117,6 @@ module.exports = function(app) {
 
     // create a new user if it doesn't exist
     app.post('/user', function(req, res) {
-        console.log(req.body);
         var username =  req.body.username;
         var firstname =  req.body.firstname;
         var lastname =  req.body.lastname;
@@ -148,7 +148,6 @@ module.exports = function(app) {
                     message: 'User created'
                 });
             } else {
-                console.log("user exists");
                 res.status(403)
                 .json({
                     status: 'failed',
@@ -161,8 +160,6 @@ module.exports = function(app) {
 
     // update the user's information
     app.put('/user', function(req, res) {
-        console.log(req.query);
-        console.log(req.body);        
         var id = req.query.id;
         var firstname = req.body.firstname;
         var lastname = req.body.lastname;
@@ -193,29 +190,68 @@ module.exports = function(app) {
     app.delete('/user', function(req, res) {
         var id = req.query.id;
         var username = req.query.username;
-        var callback = function(err) {
-            if (err) {
-                res.status(404)
-                .json({
-                    status: 'failed',
-                    data: {},
-                    message: id
-                });
-            } else {
-                // TODO delete reviews
-                res.status(200)
-                .json({
-                    status: 'success',
-                    data: {},
-                    message: 'deleted the user' 
-                });
-            }
-        };
-
-        if (id) {
-            Users.findOneAndRemove({_id: id}, callback);
+        console.log(username);
+        
+        // get the userid if not given
+        if (username) {
+            Users.find({username: username}, function(err, user) {
+                if (err) {
+                    res.status(404)
+                    .json({
+                        status: 'failed',
+                        data: {},
+                        message: id
+                    });
+                } else {
+                    // user exists
+                    if (user.length > 0) {
+                        //console.log(user);
+                        Users.findOneAndRemove({username: username}, function(err) {
+                            if (!err){
+                                console.log(user[0]._id)
+                                Reviews.remove({ userID: user[0]._id }, function(err) {
+                                    if (!err) {
+                                        res.status(200)
+                                        .json({
+                                            status: 'success',
+                                            data: user,
+                                            message: 'deleted the user'
+                                        });
+                                    }       
+                                });    
+                            }
+                        });  
+                    } else {
+                        res.status(404)
+                        .json({
+                            status: 'failed',
+                            data: {},
+                            message: id
+                        }); 
+                    }            
+                }
+            });        
         } else {
-            Users.findOneAndRemove({username: username}, callback);            
-        } 
+            Users.findOneAndRemove({_id: id}, function(err) {
+                if (!err) {
+                    Reviews.remove({ userID: id }, function(err) {
+                        res.status(200)
+                        .json({
+                            status: 'success',
+                            data: {},
+                            message:  "error occured"
+                        });
+                    });
+                } else {
+                    res.status(404)
+                    .json({
+                        status: 'failed',
+                        data: {},
+                        message: id
+                    }); 
+                }
+            });
+        }
     });
+
 };

@@ -176,13 +176,16 @@ app.get('/getUsers', function(req, res) {
     makeGetRequest('/users', req.query, req, res);
 });
 
-
 app.get('/findUser', function(req, res) {
     makeGetRequest('/user', req.query, req, res);
 });
 
 app.get('/getStores', function(req, res) {
     makeGetRequest('/stores', req.query, req, res);
+});
+
+app.get('/getReviews', function(req, res) {
+    makeGetRequest('/review', req.query, req, res);
 });
 
 app.post('/createUser', function(req, res) {
@@ -193,6 +196,11 @@ app.post('/createUser', function(req, res) {
 app.post('/createStore', function(req, res) {
     console.log(req.body);
     makePostRequest('/store', req.body, req, res);
+});
+
+app.post('/createReview', function(req, res) {
+    console.log(req.body);
+    makePostRequest('/review', req.body, req, res);
 });
 
 

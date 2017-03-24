@@ -206,6 +206,7 @@ export default class Home extends Component {
                             {this.state.stores.map(store =>
                                 <Store key={store.id}
                                        id={store.id}
+                                       userId={this.state.id}
                                        storename={store.storename}
                                        category={store.category}
                                        address={store.address} />)}
@@ -224,9 +225,9 @@ export default class Home extends Component {
                     <CollapsibleItem header='View Users' icon='assignment_ind'>
                         <h5 className="thin"> Search Users (Leave empty to get all users)</h5>
                         <Row s={12} >
-                            <Input id='searchfname' s={3} label="First Name"><Icon>shopping_cart</Icon></Input>
-                            <Input id='searchlname' s={3} label="Last Name"><Icon>subtitles</Icon></Input>
-                            <Input id='searchage' s={2} label="Age"><Icon>subtitles</Icon></Input>
+                            <Input id='searchfname' s={3} label="First Name"><Icon>perm_identity</Icon></Input>
+                            <Input id='searchlname' s={3} label="Last Name"/>
+                            <Input id='searchage' s={2} label="Age"><Icon>vpn_key</Icon></Input>
                             <Input id='searchgender' type='select' s={2} label="Gender">
                                 <option value="None">None</option>                                
                                 <option value="M">Male</option>

@@ -60,7 +60,7 @@ export default class App extends Component {
             <h3>Login</h3>
             <Row>
                 <Input className='validate' id='uname' s={12} label="Username"><Icon>account_circle</Icon></Input>
-                <Button style={buttonStyle} waves='light' onClick={this.handleClick}type='submit'>Login<Icon left>play_arrow</Icon></Button>
+                <Button className=' light blue darken-2' style={buttonStyle} waves='light' onClick={this.handleClick}type='submit'>Login<Icon left>play_arrow</Icon></Button>
             </Row>
         </Col>
     );

@@ -108,7 +108,7 @@ export default class App extends Component {
                         <option value='M'>Male</option>
                         <option value='F'>Female</option>
                     </Input>
-                    <Button style={buttonStyle} onClick={this.handleClick} waves='light' type='submit'>Register<Icon left>play_arrow</Icon></Button>
+                    <Button className=' light blue darken-2' style={buttonStyle} onClick={this.handleClick} waves='light' type='submit'>Register<Icon left>play_arrow</Icon></Button>
                 </Row>
             </Col>
         );

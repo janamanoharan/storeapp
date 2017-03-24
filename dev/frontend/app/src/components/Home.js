@@ -188,19 +188,31 @@ export default class Home extends Component {
  
     render() {
         let brand = 'Welcome, ' + this.state.username + "!";
+        var style = {
+            width: '70%',
+            margin: 'auto'
+        }
+        var style2 ={
+            backgroundColor: "#448aff",
+            height: "100%"
+        }
+        var navStyle = {
+            marginBottom: '2%',
+        }
         return (
-            <Row>
-                <Navbar brand={ brand } right>
+            <div style={style2}>
+            <Row style={style}>
+                <Navbar style={navStyle} className=' thin blue darken-2' brand={ brand } right>
                     <NavItem onClick={this.goToProfile}>Profile</NavItem>
                     <NavItem href='/'>Logout</NavItem>
                 </Navbar>
-                <Collapsible popout>
-                    <CollapsibleItem header='View Stores' icon='shopping_cart'>
+                <Collapsible  style={style} popout>
+                    <CollapsibleItem className="blue lighten-5" header='View Stores' icon='shopping_cart'>
                         <h5 className="thin"> Search Stores (Leave empty to get all stores)</h5>
                         <Row s={12} >
                             <Input id='storename' s={5} label="Store Name"><Icon>shopping_cart</Icon></Input>
                             <Input id='category' s={5} label="Category"><Icon>subtitles</Icon></Input>
-                            <Button onClick={this.getStores} waves='light' type='submit'>Search<Icon left>play_arrow</Icon></Button>
+                            <Button className=' light blue darken-2' onClick={this.getStores} waves='light' type='submit'>Search<Icon left>play_arrow</Icon></Button>
                         </Row>
                         <Collection>
                             {this.state.stores.map(store =>
@@ -210,19 +222,19 @@ export default class Home extends Component {
                                        storename={store.storename}
                                        category={store.category}
                                        address={store.address} />)}
-                            <Collapsible >
+                            <Collapsible>
                                 <CollapsibleItem header={"Don't see the store you were looking for? Click to add"}>
                                     <Row s={12}>
                                         <Input id='newStorename' s={3} label="Store name"/>
                                         <Input id='newCategory' s={3} label="Category"/>
                                         <Input id='newAddress' s={3} label="Address"/>                                        
-                                        <Button onClick={this.createStore} waves='light' type='submit'>Submit Store<Icon left>play_arrow</Icon></Button>                                             
+                                        <Button className=' light blue darken-2' onClick={this.createStore} waves='light' type='submit'>Submit Store<Icon left>play_arrow</Icon></Button>                                             
                                     </Row>
                                 </CollapsibleItem>
                             </Collapsible>
                         </Collection>
                     </CollapsibleItem>
-                    <CollapsibleItem header='View Users' icon='assignment_ind'>
+                    <CollapsibleItem className="blue lighten-5" header='View Users' icon='assignment_ind'>
                         <h5 className="thin"> Search Users (Leave empty to get all users)</h5>
                         <Row s={12} >
                             <Input id='searchfname' s={3} label="First Name"><Icon>perm_identity</Icon></Input>
@@ -234,16 +246,17 @@ export default class Home extends Component {
                                 <option value="F">Female</option>                                
                             </Input>
                             
-                            <Button onClick={this.getUsers} waves='light' type='submit'>Search<Icon left>play_arrow</Icon></Button>
+                            <Button className=' light blue darken-2' onClick={this.getUsers} waves='light' type='submit'>Search<Icon left>play_arrow</Icon></Button>
                         </Row>
                         <Collection>
                             {this.state.users.map(user =>
-                                <CollectionItem key={user.id}>{user.firstname} {user.lastname}, {user.username}</CollectionItem>)}
+                                <CollectionItem className="blue lighten-5" key={user.id}>{user.firstname} {user.lastname}, {user.username}</CollectionItem>)}
                         </Collection>
 
                     </CollapsibleItem>
                 </Collapsible>
             </Row>
+            </div>
         );
     }
 }

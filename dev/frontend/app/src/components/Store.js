@@ -131,7 +131,7 @@ export default class Store extends Component {
           
           <Modal header={ head }
                    trigger={
-                            <CollectionItem>{ head }</CollectionItem>
+                            <CollectionItem className="blue lighten-5">{ head }</CollectionItem>
                            }>
                   <h4 className="thin">Store Information</h4>
                   <p>Name: {this.state.storename}</p>
@@ -160,7 +160,7 @@ export default class Store extends Component {
                                 <option value="9">9</option>
                                 <option value="10">10</option>
                             </Input>
-                            <Button onClick={this.postReview} waves='light' type='submit'>Post<Icon left>play_arrow</Icon></Button>
+                            <Button className=' light blue darken-2' onClick={this.postReview} waves='light' type='submit'>Post<Icon left>play_arrow</Icon></Button>
                         </Row>
                     </CollapsibleItem>
                     <CollapsibleItem onClick={this.getReviews} header={"Read Reviews"}>

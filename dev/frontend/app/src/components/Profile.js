@@ -122,17 +122,23 @@ export default class Profile extends Component {
         var style = {
             textAlign: 'center',
             width: '70%',
-            margin: 'auto'
+            margin: 'auto',
+            paddingTop: "1%"
+        }
+        var style2 ={
+            backgroundColor: "#448aff",
+            height: "130%"
         }
         var ageString = this.state.age.toString();
         return (
+            <div style={style2}>
             <Row>
-                <Navbar brand="Profile" right>
+                <Navbar className=' thin blue darken-2' brand="Profile" right>
                         <NavItem onClick={this.goHome}>Home</NavItem>
                         <NavItem href='/'>Logout</NavItem>
                 </Navbar>
-                <div style={style}>
-                <Row style={style}>
+                <div className="blue lighten-5 z-depth-5"style={style}>
+                <Row >
                 <h3>Your Profile</h3>
                 <Input disabled className='validate' pattern='[a-zA-Z0-9].{4,}' id='uname' s={12} placeholder={this.state.username}></Input>
                 <Input id='fname' className='validate' pattern='[a-zA-Z].{1,}' id='fname' s={12}  placeholder={this.state.firstname}></Input>
@@ -142,11 +148,12 @@ export default class Profile extends Component {
                         <option value='M'>Male</option>
                         <option value='F'>Female</option>
                     </Input>
-                <Button onClick={this.handleClick} waves='light' type='submit'>Update Profile</Button>
+                <Button className=' light blue darken-2' onClick={this.handleClick} waves='light' type='submit'>Update Profile</Button>
                 </Row>
-                <Button onClick={this.handleDelete} waves='light' type='submit'>Delete Account</Button>                
+                <Button className=' light blue darken-2'onClick={this.handleDelete} waves='light' type='submit'>Delete Account</Button>                
                 </div>
             </Row>
+            </div>
         )
     }
 

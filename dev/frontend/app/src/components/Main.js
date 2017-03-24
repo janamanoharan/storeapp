@@ -14,17 +14,21 @@ export default class App extends Component {
   render() {
         var style = {
             paddingRight: '45%',
-            marginBottom: '2%'
+            marginBottom: '2%',
+            
         }
         var style2 = {
-            textAlign: 'center',
+            //textAlign: 'center',
+            height: '100%',
+            backgroundColor:  "#448aff",
             margin: 'auto'
         }
         var buttonStyle = {marginLeft: "2%"}
 
+
     return (
         <Row>
-            <Navbar style={style} brand='ShopRates' left />
+            <Navbar className=' light blue darken-2' style={style} brand='ShopRates' left />
             <Login />
             <Register />
         </Row>

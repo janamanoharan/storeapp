@@ -25,7 +25,7 @@ I have implemented all the CRUD methods that are required for this assignment.
 6. Insert a Store (```POST /store```)
 7. Post a review (```POST /review```)
 8. Get all reviews (```GET /review?query```)
-9. Get avaerage rating for a store (```GET /review?query```)
+9. Get average rating for a store (```GET /review?query```)
 
 ## Methods that aren't hooked to the frontend
 1. (```PUT /user```) - Design decision to not be able to change user information

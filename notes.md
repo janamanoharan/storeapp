@@ -19,13 +19,15 @@ I have implemented all the CRUD methods that are required for this assignment.
 ### Frontend
 1. Login (```GET /user```)
 2. Register (```POST /user```)
-3. View all users (```GET /users```),(```GET /users?query```)
-4. Delete account (```DELETE /user```)
-5. View all stores (```GET /stores```), (```GET /stores?query```)
-6. Insert a Store (```POST /store```)
-7. Post a review (```POST /review```)
-8. Get all reviews (```GET /review?query```)
-9. Get average rating for a store (```GET /review?query```)
+3. View all users (```GET /users```)
+4. Filter user by name, age and gender (```GET /users?query```)
+5. Delete account (```DELETE /user```)
+6. View all stores (```GET /stores```)
+7. Filter stores by name and category (```GET /stores?query```)
+8. Insert a Store (```POST /store```)
+9. Post a review (```POST /review```)
+10. Get all reviews (```GET /review?query```)
+11. Get average rating for a store (```GET /review?query```)
 
 ## Methods that aren't hooked to the frontend
 1. (```PUT /user```) - Design decision to not be able to change user information
